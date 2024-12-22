@@ -1,13 +1,17 @@
-//node deploy.js
 require('dotenv').config();
 const Web3 = require('web3');
 const fs = require('fs');
 const path = require('path');
-const quickurln = process.env.QUICKNODE_URL;
-const grafanaApiKey = process.env.GRAFANA_API_KEY;
 
-// Replace YOUR_QUICKNODE_URL with your QuickNode HTTP Provider URL
-const web3 = new Web3(quickurln);
+// Load environment variables
+const quickNodeUrl = process.env.QUICKNODE_URL;
+const privateKey = process.env.QUICKNODE_PRIVATE;
+//const walletAddress = process.env.WALLET_ADDRESS;
+//const mainBotAddress = process.env.MAINBOT_ADDRESS;
+//const controllerAddress = process.env.CONTROLLER_ADDRESS;
+
+// Initialize Web3 with QuickNode URL
+const web3 = new Web3(quickNodeUrl);
 
 // Update these paths as needed
 const mainBotPath = path.resolve(__dirname, 'contracts', 'MainBot.sol');
@@ -18,7 +22,7 @@ const mainBotSource = fs.readFileSync(mainBotPath, 'utf8');
 const controllerSource = fs.readFileSync(controllerPath, 'utf8');
 
 // Replace YOUR_PRIVATE_KEY with your own Ethereum account private key
-const account = web3.eth.accounts.privateKeyToAccount(grafanaApiKey);
+const account = web3.eth.accounts.privateKeyToAccount(privateKey);
 web3.eth.accounts.wallet.add(account);
 web3.eth.defaultAccount = account.address;
 

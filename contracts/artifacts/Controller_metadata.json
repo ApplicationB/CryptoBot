@@ -235,7 +235,7 @@
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
 		"remappings": []
@@ -250,11 +250,11 @@
 			]
 		},
 		"contracts/MainBot.sol": {
-			"keccak256": "0xc4385ac42c941fccfa64d335ce446fde9e8c0fa1cc2bd366b9e9a498f4e25bcd",
-			"license": "MIT",
+			"keccak256": "0x56eac8493c21c7d33dee50c4cf271f22d8956d11c5c11e4246256ae2d5b4330b",
+			"license": "MITs",
 			"urls": [
-				"bzz-raw://0797f66da255366dccf1bef59641e05f8715357f53f021e47ab7a0fa9180ed7c",
-				"dweb:/ipfs/QmQdim8soc9m1RKrnRenZSWR7pFDHyYfPuZhWRmMUzWUAM"
+				"bzz-raw://42088ce0a38c5bd89f60629db180c1e24ccd28b1ef15b33629fa075e3cbfad47",
+				"dweb:/ipfs/QmbbcVx6DmRDiYNyKCqrJzebyc8mEe452PCC2wQhW1Haxu"
 			]
 		},
 		"contracts/aave/protocol-v2/contracts/interfaces/DataTypes.sol": {

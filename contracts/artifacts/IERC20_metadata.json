@@ -101,11 +101,11 @@
 	},
 	"sources": {
 		"contracts/MainBot.sol": {
-			"keccak256": "0xa5e251d4f3896580fd0317b9b0b9775034c587c5ced1bf29d76c3e1ac24a2be5",
-			"license": "MIT",
+			"keccak256": "0x56eac8493c21c7d33dee50c4cf271f22d8956d11c5c11e4246256ae2d5b4330b",
+			"license": "MITs",
 			"urls": [
-				"bzz-raw://f548a8a60bbb9254d2407286df74a8a950eb1a634fe7e3549102d2f71b594971",
-				"dweb:/ipfs/QmbwureqGNuvfRt6r5JCgHJJrjbCPbFnKeKFMBhEeLao8x"
+				"bzz-raw://42088ce0a38c5bd89f60629db180c1e24ccd28b1ef15b33629fa075e3cbfad47",
+				"dweb:/ipfs/QmbbcVx6DmRDiYNyKCqrJzebyc8mEe452PCC2wQhW1Haxu"
 			]
 		},
 		"contracts/aave/protocol-v2/contracts/interfaces/DataTypes.sol": {

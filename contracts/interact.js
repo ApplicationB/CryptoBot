@@ -2,19 +2,18 @@ require('dotenv').config();
 const Web3 = require('web3');
 const fs = require('fs');
 const path = require('path');
+
+// Load environment variables
+const quickNodeUrl = process.env.QUICKNODE_URL;
+const privateKey = process.env.QUICKNODE_PRIVATE;
 const mainBotAddress = process.env.MAINBOT_ADDRESS;
 const controllerAddress = process.env.CONTROLLER_ADDRESS;
-const quicknodeApiKey = process.env.QUICKNODE_PRIVATE;
-const quickurln = process.env.QUICKNODE_URL;
-// Replace YOUR_QUICKNODE_URL with your QuickNode HTTP Provider URL
-const web3 = new Web3( quickurln);
 
-// Replace these addresses with your deployed contract addresses
-//const mainBotAddress = '0x182BaF98B655e704034EEB963052a41FBa3e38a6'; // MainBot contract address
-//const controllerAddress = '0x4B2eB6Fd561040899B2f147c986AFB0407A0b0be'; // Controller contract address
+// Initialize Web3 with QuickNode URL
+const web3 = new Web3(quickNodeUrl);
 
 // Replace YOUR_PRIVATE_KEY with your own Ethereum account private key
-const account = web3.eth.accounts.privateKeyToAccount(quicknodeApiKey);
+const account = web3.eth.accounts.privateKeyToAccount(privateKey);
 web3.eth.accounts.wallet.add(account);
 web3.eth.defaultAccount = account.address;
 

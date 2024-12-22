@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MITs
 pragma solidity ^0.8.20;
 
 import './chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol';
@@ -9,8 +9,6 @@ import './uniswap/v3-periphery/contracts/interfaces/IPeripheryPayments.sol';
 import './uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol';
 import './aave/protocol-v2/contracts/interfaces/ILendingPool.sol';
 import './aave/protocol-v2/contracts/interfaces/ILendingPoolAddressesProvider.sol';
- 
-
 
 interface IERC20 {
     function transfer(address recipient, uint256 amount) external returns (bool);
@@ -31,15 +29,14 @@ contract MainBot {
     uint256 public nextLogTime;
     string public currentActivity = "Initializing";
 
-    address public POLToken = 0x22B21BedDef74FE62F031D2c5c8F7a9F8a4b304D; // POL on Polygon  [SWAP TOKEN HERE]
-    address public usdtToken = 0x1E4a5963aBFD975d8c9021ce480b42188849D41d; // USDT on Polygon
-    address public usdcToken = 0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035; // USDC on Polygon
-    address public quickSwapRouter = 0x1E7E4c855520b2106320952A570a3e5E3E618101; // QuickSwap Router
-    address public priceFeedAddress = 0x5E988c11a4f92155C30D9fb69Ed75597f712B113; // Chainlink MATIC/USD
-
-    address public uniswapRouter = 0x1E7E4c855520b2106320952A570a3e5E3E618101; // Uniswap V3 SwapRouter
-    address public uniswapPositionManager = 0xC36442b4a4522E871399CD717aBDD847Ab11FE88; // Uniswap V3 PositionManager
-    address public aaveLendingPoolAddressesProvider = 0xd05e3E715d945B59290df0ae8eF85c1BdB684744; // AAVE LendingPoolAddressesProvider
+    address public polToken;
+    address public usdtToken;
+    address public usdcToken;
+    address public quickSwapRouter;
+    address public priceFeedAddress;
+    address public uniswapRouter;
+    address public uniswapPositionManager;
+    address public aaveLendingPoolAddressesProvider;
 
     mapping(string => address) public dexRouters;
 
@@ -58,8 +55,26 @@ contract MainBot {
         _;
     }
 
-    constructor() {
+    constructor(
+        address _polToken,
+        address _usdtToken,
+        address _usdcToken,
+        address _quickSwapRouter,
+        address _priceFeedAddress,
+        address _uniswapRouter,
+        address _uniswapPositionManager,
+        address _aaveLendingPoolAddressesProvider
+    ) {
         owner = msg.sender;
+        polToken = _polToken;
+        usdtToken = _usdtToken;
+        usdcToken = _usdcToken;
+        quickSwapRouter = _quickSwapRouter;
+        priceFeedAddress = _priceFeedAddress;
+        uniswapRouter = _uniswapRouter;
+        uniswapPositionManager = _uniswapPositionManager;
+        aaveLendingPoolAddressesProvider = _aaveLendingPoolAddressesProvider;
+        
         dexRouters["QuickSwap"] = quickSwapRouter;
         tradingEnabled = false;
         profitThreshold = 110; // 10% profit
@@ -98,23 +113,19 @@ contract MainBot {
     function convertAllToPOL() external onlyOwner {
         emit TradeExecuted(msg.sender, "convert to POL", 0, 0, getPrice());
     }
-function checkLiquidity(uint256 amountIn, address poolAddress) public view returns (bool sufficientLiquidity) {
-    IUniswapV3Pool pool = IUniswapV3Pool(poolAddress);
-    (uint160 sqrtPriceX96,,,,,,) = pool.slot0();
-    uint256 liquidity = pool.liquidity();
 
-    // Calculate expected output (simplified example, adjust based on your pool and requirements)
-    uint256 amountOut = calculateAmountOut(amountIn, sqrtPriceX96, liquidity);
+    function checkLiquidity(uint256 amountIn, address poolAddress) public view returns (bool sufficientLiquidity) {
+        IUniswapV3Pool pool = IUniswapV3Pool(poolAddress);
+        (uint160 sqrtPriceX96,,,,,,) = pool.slot0();
+        uint256 liquidity = pool.liquidity();
+        uint256 amountOut = calculateAmountOut(amountIn, sqrtPriceX96, liquidity);
+        uint256 slippage = (amountOut * 1) / 100;
+        sufficientLiquidity = (amountOut >= amountIn - slippage);
+    }
 
-    uint256 slippage = (amountOut * 1) / 100;
-    sufficientLiquidity = (amountOut >= amountIn - slippage);
-}
-
-function calculateAmountOut(uint256 amountIn, uint160 sqrtPriceX96, uint256 liquidity) internal pure returns (uint256) {
-    // Example calculation, adjust as needed for your logic
-    return uint256(amountIn * sqrtPriceX96 / liquidity);
-}
-
+    function calculateAmountOut(uint256 amountIn, uint160 sqrtPriceX96, uint256 liquidity) internal pure returns (uint256) {
+        return uint256(amountIn * sqrtPriceX96 / liquidity);
+    }
 
     function disableTrading() external onlyOwner {
         tradingEnabled = false;
@@ -126,14 +137,14 @@ function calculateAmountOut(uint256 amountIn, uint160 sqrtPriceX96, uint256 liqu
         payable(owner).transfer(amountInWei);
     }
 
-function kill() external onlyOwner {
-    payable(msg.sender).transfer(address(this).balance);
-}
+    function kill() external onlyOwner {
+        payable(msg.sender).transfer(address(this).balance);
+    }
 
     function logCurrentActivity() internal whenTradingEnabled {
         if (block.timestamp >= nextLogTime) {
             emit CurrentActivity(currentActivity);
-            nextLogTime = block.timestamp + 60; // 60 seconds interval
+            nextLogTime = block.timestamp + 60;
         }
     }
 
@@ -180,13 +191,13 @@ function kill() external onlyOwner {
         fibLevels[7] = high + (high - low) * 618 / 1000;
         fibLevels[8] = high + (high - low) * 168 / 100;
         fibLevels[9] = high + (high - low) * 618 / 1000;
-        fibLevels[10] = high + (high - low) * 236 / 100; 
-        return fibLevels; } 
-        function getPrice() internal view returns (uint256) { 
-            AggregatorV3Interface priceFeed = AggregatorV3Interface(priceFeedAddress); 
-            (, int price,,,) = priceFeed.latestRoundData(); return uint256(price * 10 ** 10); 
-            // Converting to 18 decimal places 
-            } 
-            }
+        fibLevels[10] = high + (high - low) * 236 / 100;
+        return fibLevels;
+    }
 
- 
+    function getPrice() internal view returns (uint256) {
+        AggregatorV3Interface priceFeed = AggregatorV3Interface(priceFeedAddress);
+        (, int price,,,) = priceFeed.latestRoundData();
+        return uint256(price * 10 ** 10);
+    }
+}
