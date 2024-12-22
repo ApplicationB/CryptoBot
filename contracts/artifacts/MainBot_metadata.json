@@ -499,18 +499,18 @@
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
 		"remappings": []
 	},
 	"sources": {
 		"contracts/MainBot.sol": {
-			"keccak256": "0x66347abd18f346bc32084336597fb9f31bb8d69d8a1edf96ffba302c489768e4",
-			"license": "MITs",
+			"keccak256": "0xa5e251d4f3896580fd0317b9b0b9775034c587c5ced1bf29d76c3e1ac24a2be5",
+			"license": "MIT",
 			"urls": [
-				"bzz-raw://3e7570cffe867a979714202aa0d7fcbcdb38b0fc4c4092bd162918cd91623729",
-				"dweb:/ipfs/QmQE2QZQbaRywtAhkZA1PMgcL3rn6aUZpB5pD1vbVgtu5P"
+				"bzz-raw://f548a8a60bbb9254d2407286df74a8a950eb1a634fe7e3549102d2f71b594971",
+				"dweb:/ipfs/QmbwureqGNuvfRt6r5JCgHJJrjbCPbFnKeKFMBhEeLao8x"
 			]
 		},
 		"contracts/aave/protocol-v2/contracts/interfaces/DataTypes.sol": {
