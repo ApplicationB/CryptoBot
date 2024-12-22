@@ -1,0 +1,45 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/aave/protocol-v2/contracts/interfaces/DataTypes.sol": "DataTypes"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/aave/protocol-v2/contracts/interfaces/DataTypes.sol": {
+			"keccak256": "0x81caed3fbb24bd8721c85094546ee31f033209a1dc5b8aa4d8ce094388666cb4",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c4ab7c3612816908da41df1a0f62bde806a9fe088198dcd7b70f6a8f31c7d131",
+				"dweb:/ipfs/QmRNtcEwyFdiJmbJ1oyDiDZ3foyrHchCMo1MYjAXYR7zdd"
+			]
+		}
+	},
+	"version": 1
+}

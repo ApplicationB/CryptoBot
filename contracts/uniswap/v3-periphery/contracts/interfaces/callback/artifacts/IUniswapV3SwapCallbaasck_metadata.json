@@ -1,0 +1,84 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "int256",
+						"name": "amount0Delta",
+						"type": "int256"
+					},
+					{
+						"internalType": "int256",
+						"name": "amount1Delta",
+						"type": "int256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "data",
+						"type": "bytes"
+					}
+				],
+				"name": "uniswapV3SwapCallback",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"uniswapV3SwapCallback(int256,int256,bytes)": {
+					"details": "In the implementation you must pay the pool tokens owed for the swap. The caller of this method must be checked to be a UniswapV3Pool deployed by the canonical UniswapV3Factory. amount0Delta and amount1Delta can both be 0 if no tokens were swapped.",
+					"params": {
+						"amount0Delta": "The amount of token0 that was sent (negative) or must be received (positive) by the pool by the end of the swap. If positive, the callback must send that amount of token0 to the pool.",
+						"amount1Delta": "The amount of token1 that was sent (negative) or must be received (positive) by the pool by the end of the swap. If positive, the callback must send that amount of token1 to the pool.",
+						"data": "Any data passed through by the caller via the IUniswapV3PoolActions#swap call"
+					}
+				}
+			},
+			"title": "Callback for IUniswapV3PoolActions#swap",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"uniswapV3SwapCallback(int256,int256,bytes)": {
+					"notice": "Called to `msg.sender` after executing a swap via IUniswapV3Pool#swap."
+				}
+			},
+			"notice": "Any contract that calls IUniswapV3PoolActions#swap must implement this interface",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/uniswap/v3-periphery/contracts/interfaces/callback/IUniswapV3SwapCallback.sol": "IUniswapV3SwapCallbaasck"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/uniswap/v3-periphery/contracts/interfaces/callback/IUniswapV3SwapCallback.sol": {
+			"keccak256": "0x17b08aa8ef626d1109233055c2372890d9218466beedf6ddaa33dbf34d73c93c",
+			"license": "GPL-2.0-or-later",
+			"urls": [
+				"bzz-raw://b010f70a0ec97b13543ad2733fa325ba48dd7872489addae8eebb3970a35a78e",
+				"dweb:/ipfs/QmVojaF8fGGENnvomjtYYkFPyAwU1SSwSkvZ1TSQHz1Cmh"
+			]
+		}
+	},
+	"version": 1
+}
