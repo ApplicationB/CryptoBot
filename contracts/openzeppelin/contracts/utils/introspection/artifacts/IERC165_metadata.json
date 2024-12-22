@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.0+commit.c7dfd78e"
+		"version": "0.8.20+commit.a1b79de6"
 	},
 	"language": "Solidity",
 	"output": {
@@ -45,24 +45,24 @@
 		"compilationTarget": {
 			"contracts/openzeppelin/contracts/utils/introspection/IERC165.sol": "IERC165"
 		},
-		"evmVersion": "istanbul",
+		"evmVersion": "shanghai",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
 		"remappings": []
 	},
 	"sources": {
 		"contracts/openzeppelin/contracts/utils/introspection/IERC165.sol": {
-			"keccak256": "0x1e96fdc714c1d5e754ad716c7cb4ac8daa28856879f2d40bb428720adac47b69",
+			"keccak256": "0x79796192ec90263f21b464d5bc90b777a525971d3de8232be80d9c4f9fb353b8",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1725af76c335db636686b0b8f36dfdcfa15d40993509ed80c6e579dfd3e1c2f3",
-				"dweb:/ipfs/QmcT6Bp635CWdmxQnv84bicV4eaD46cY1ywZNgriSusJXw"
+				"bzz-raw://f6fda447a62815e8064f47eff0dd1cf58d9207ad69b5d32280f8d7ed1d1e4621",
+				"dweb:/ipfs/QmfDRc7pxfaXB2Dh9np5Uf29Na3pQ7tafRS684wd3GLjVL"
 			]
 		}
 	},

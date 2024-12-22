@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.26+commit.8a97fa7a"
+		"version": "0.8.20+commit.a1b79de6"
 	},
 	"language": "Solidity",
 	"output": {
@@ -20,24 +20,24 @@
 		"compilationTarget": {
 			"contracts/aave/protocol-v2/contracts/interfaces/DataTypes.sol": "DataTypes"
 		},
-		"evmVersion": "cancun",
+		"evmVersion": "shanghai",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
 		"remappings": []
 	},
 	"sources": {
 		"contracts/aave/protocol-v2/contracts/interfaces/DataTypes.sol": {
-			"keccak256": "0x81caed3fbb24bd8721c85094546ee31f033209a1dc5b8aa4d8ce094388666cb4",
+			"keccak256": "0x3c126df12782518f7ae20a35358d4b55b57a64dfac2fca4b3d6a8a4ca6aed911",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://c4ab7c3612816908da41df1a0f62bde806a9fe088198dcd7b70f6a8f31c7d131",
-				"dweb:/ipfs/QmRNtcEwyFdiJmbJ1oyDiDZ3foyrHchCMo1MYjAXYR7zdd"
+				"bzz-raw://be9e0c1d61b42fbdce8524013b225ed8352978d6a0035552109bfa76065ae275",
+				"dweb:/ipfs/QmcStYcnoGywFhiUXAZk6fhypW9BFwqQrnfw9gf6UfeqP3"
 			]
 		}
 	},

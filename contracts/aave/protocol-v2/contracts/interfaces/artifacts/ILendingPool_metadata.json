@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.26+commit.8a97fa7a"
+		"version": "0.8.20+commit.a1b79de6"
 	},
 	"language": "Solidity",
 	"output": {
@@ -1280,13 +1280,13 @@
 		"compilationTarget": {
 			"contracts/aave/protocol-v2/contracts/interfaces/ILendingPool.sol": "ILendingPool"
 		},
-		"evmVersion": "cancun",
+		"evmVersion": "shanghai",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
 		"remappings": []
@@ -1301,11 +1301,11 @@
 			]
 		},
 		"contracts/aave/protocol-v2/contracts/interfaces/ILendingPool.sol": {
-			"keccak256": "0xbcbeb7a9a1bc100bae12891df6265691103d76f71e7eed72902d2024f05f654b",
+			"keccak256": "0x4553509caee0ee64cb12064b790dc8b584c9241cba8d293c314872999b0148bf",
 			"license": "agpl-3.0",
 			"urls": [
-				"bzz-raw://898ea64e297442bb3bc7c7215786ae6453dce7900200f836041ff9ed7867f4e0",
-				"dweb:/ipfs/QmTuSyHSYg7PNo6eRDe1ATJZ2UxDxwFJUshJRnT22co19a"
+				"bzz-raw://0bcb9ae40fe4f04f2247fae2c879d5c5b970fe8fbaa524c7169f977c91802d31",
+				"dweb:/ipfs/QmZ2U1LRC2TRA3LNEjBbdMpa7gW585JfjMkngyDotyxXzG"
 			]
 		},
 		"contracts/aave/protocol-v2/contracts/interfaces/ILendingPoolAddressesProvider.sol": {
