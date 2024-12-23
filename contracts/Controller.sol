@@ -8,6 +8,9 @@ contract Controller {
     address public owner;
     uint256 public checkInterval;
     uint256 public nextCheckTime;
+    uint256 public initialDeposit;
+    uint256 public maticBalance;
+    uint256 public stablecoinBalance;
 
     event LogControllerCheck(uint256 time);
     event LogControllerTrade(string tradeType, uint256 amount);
@@ -89,9 +92,20 @@ contract Controller {
         emit LogControllerTrade("Adjusting timeframe", selectedTimeframe);
     }
 
-function kill() external onlyOwner {
-    payable(msg.sender).transfer(address(this).balance);
+function killBot() external onlyOwner {
+    mainBot.kill();
+    payable(msg.sender).transfer(address(mainBot).balance);
+   
 }
+function kill() public {
+    payable(msg.sender).transfer(address().balance);//adjust for transfering to wallet not from
+}
+
+receive() external payable {
+        initialDeposit += msg.value;
+        maticBalance += (msg.value * 70) / 100;
+        stablecoinBalance += (msg.value * 30) / 100;
+    }
 
     function withdrawInGwei(uint256 amountInGwei) external onlyOwner {
         uint256 amountInWei = amountInGwei * 1 gwei;

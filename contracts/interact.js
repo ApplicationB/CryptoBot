@@ -5,23 +5,9 @@ const fs = require('fs');
 const path = require('path');
 
 
-const mainBotPath = path.resolve(__dirname, '../artifacts/contracts/MainBot.sol/MainBot.json');
-const mainBotArtifact = JSON.parse(fs.readFileSync(mainBotPath, 'utf8'));
-
-
-
 // Load the compiled contract JSON
 const controllerPath = path.resolve(__dirname, '../artifacts/contracts/Controller.sol/Controller.json');
 const controllerArtifact = JSON.parse(fs.readFileSync(controllerPath, 'utf8'));
-
-
-// Save the ABI to a new file
-//fs.writeFileSync('ControllerABI.json', JSON.stringify(controllerABI, null, 2));
-
-// Save the ABI to a new file
-//fs.writeFileSync('MainBotABI.json', JSON.stringify(mainBotABI, null, 2));
-
-
 
 // Load environment variables
 const quickNodeUrl = process.env.QUICKNODE_URL;
@@ -37,8 +23,8 @@ const provider = new ethers.providers.JsonRpcProvider(quickNodeUrl);
 
 // Create an Ethers wallet
 const wallet = new ethers.Wallet(formattedPrivateKey, provider);
-
-// Load contract ABIs
+const mainBotPath = path.resolve(__dirname, '../artifacts/contracts/MainBot.sol/MainBot.json');
+const mainBotArtifact = JSON.parse(fs.readFileSync(mainBotPath, 'utf8'));
 //const mainBotABI = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'MainBotABI.json'), 'utf8'));
 const mainBotABI = mainBotArtifact.abi;
 //const controllerABI = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'ControllerABI.json'), 'utf8'));
