@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.26+commit.8a97fa7a"
+		"version": "0.8.20+commit.a1b79de6"
 	},
 	"language": "Solidity",
 	"output": {
@@ -415,13 +415,13 @@
 		"compilationTarget": {
 			"contracts/openzeppelin/contracts/token/ERC721/IERC721Enumerable.sol": "IERC721Enumerable"
 		},
-		"evmVersion": "cancun",
+		"evmVersion": "shanghai",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
 		"remappings": []
@@ -436,11 +436,11 @@
 			]
 		},
 		"contracts/openzeppelin/contracts/token/ERC721/IERC721Enumerable.sol": {
-			"keccak256": "0x49ae5d944b6f25701d67ef1d76cbce766f062bf1958a34b13543f539d7882850",
+			"keccak256": "0x214335376e334c64038a801e7350ccbff96d67bae9a0cd5913b65ae0d675136b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://851181789f63ce009fa30ddabd8ef159d90733216d5d1f2f9e13d16688f67489",
-				"dweb:/ipfs/QmdT4okvCWQC1eSYNFfyqjUkJBAiWbSZMwAazzEuizBJSb"
+				"bzz-raw://79061c6351c2071e2dbb6b2948771ba3f53d93546fe45b620604b32a5620c76e",
+				"dweb:/ipfs/QmXDgY4iuF9yi8fNLvzu3AquiQnf4D1aZ9kKDyGDE8N1aK"
 			]
 		},
 		"contracts/openzeppelin/contracts/utils/introspection/IERC165.sol": {

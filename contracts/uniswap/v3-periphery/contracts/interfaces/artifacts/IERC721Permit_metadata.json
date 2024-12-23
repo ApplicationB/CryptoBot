@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.26+commit.8a97fa7a"
+		"version": "0.8.20+commit.a1b79de6"
 	},
 	"language": "Solidity",
 	"output": {
@@ -442,28 +442,20 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/Uniswap/v3-periphery/contracts/interfaces/IERC721Permit.sol": "IERC721Permit"
+			"contracts/uniswap/v3-periphery/contracts/interfaces/IERC721Permit.sol": "IERC721Permit"
 		},
-		"evmVersion": "cancun",
+		"evmVersion": "shanghai",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
 		"remappings": []
 	},
 	"sources": {
-		"contracts/Uniswap/v3-periphery/contracts/interfaces/IERC721Permit.sol": {
-			"keccak256": "0x9915ccd225c6840a809606b1a929404b0299bff8d7cbb6bc8439c5dfd74046d2",
-			"license": "GPL-2.0-or-later",
-			"urls": [
-				"bzz-raw://f0cdf83091593d05e85f50c1c40cf17c8c1eb6aeaac87cb9f8c91e8e31cf162c",
-				"dweb:/ipfs/QmZxxuzCfsPLnARKERZj2fvy2mEvyQWJd9uDWpFwj4UkJa"
-			]
-		},
 		"contracts/openzeppelin/contracts/token/ERC721/IERC721.sol": {
 			"keccak256": "0x5dc63d1c6a12fe1b17793e1745877b2fcbe1964c3edfd0a482fac21ca8f18261",
 			"license": "MIT",
@@ -478,6 +470,14 @@
 			"urls": [
 				"bzz-raw://f6fda447a62815e8064f47eff0dd1cf58d9207ad69b5d32280f8d7ed1d1e4621",
 				"dweb:/ipfs/QmfDRc7pxfaXB2Dh9np5Uf29Na3pQ7tafRS684wd3GLjVL"
+			]
+		},
+		"contracts/uniswap/v3-periphery/contracts/interfaces/IERC721Permit.sol": {
+			"keccak256": "0x759a0bd1bfaf084c9f34071c10d665861b5f2858d3755bfa5c52a9d74146e733",
+			"license": "GPL-2.0-or-later",
+			"urls": [
+				"bzz-raw://2224edfcf78039bd5eab48c8e9ca45275efa8f62d87f701a6ab5ddf682a13706",
+				"dweb:/ipfs/QmQD3NwFvLTZtE6B2mdBW5Kf2c85UaAaknMCr5xy1Syt7a"
 			]
 		}
 	},

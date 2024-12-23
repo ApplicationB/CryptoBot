@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.26+commit.8a97fa7a"
+		"version": "0.8.20+commit.a1b79de6"
 	},
 	"language": "Solidity",
 	"output": {
@@ -1270,60 +1270,20 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/Uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol": "INonfungiblePositionManager"
+			"contracts/uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol": "INonfungiblePositionManager"
 		},
-		"evmVersion": "cancun",
+		"evmVersion": "shanghai",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
 		"remappings": []
 	},
 	"sources": {
-		"contracts/Uniswap/v3-periphery/contracts/interfaces/IERC721Permit.sol": {
-			"keccak256": "0x9915ccd225c6840a809606b1a929404b0299bff8d7cbb6bc8439c5dfd74046d2",
-			"license": "GPL-2.0-or-later",
-			"urls": [
-				"bzz-raw://f0cdf83091593d05e85f50c1c40cf17c8c1eb6aeaac87cb9f8c91e8e31cf162c",
-				"dweb:/ipfs/QmZxxuzCfsPLnARKERZj2fvy2mEvyQWJd9uDWpFwj4UkJa"
-			]
-		},
-		"contracts/Uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol": {
-			"keccak256": "0x631739110217293c69ff6fc6ca4499fcabe8774fb17de93a5546dabe6e207034",
-			"license": "GPL-2.0-or-later",
-			"urls": [
-				"bzz-raw://9f61686e40280404bb22e20c5c380ed8dd4467c8c5c164762566233146cc2e26",
-				"dweb:/ipfs/QmbA6qoN6NJvnj3vTRFA5ozNLdnWqtK5iJjqzcR1NS3qJk"
-			]
-		},
-		"contracts/Uniswap/v3-periphery/contracts/interfaces/IPeripheryImmutableState.sol": {
-			"keccak256": "0x7affcfeb5127c0925a71d6a65345e117c33537523aeca7bc98085ead8452519d",
-			"license": "GPL-2.0-or-later",
-			"urls": [
-				"bzz-raw://e16b291294210e71cb0f20cd0afe62ae2dc6878d627f5ccc19c4dc9cd80aec3f",
-				"dweb:/ipfs/QmQGitSyBr26nour81BZmpmDMyJpvZRqHQZvnCD1Acb127"
-			]
-		},
-		"contracts/Uniswap/v3-periphery/contracts/interfaces/IPeripheryPayments.sol": {
-			"keccak256": "0xb547e10f1e69bed03621a62b73a503e260643066c6b4054867a4d1fef47eb274",
-			"license": "GPL-2.0-or-later",
-			"urls": [
-				"bzz-raw://f9a90f58f5fd5fb42f7811f4094113b532f307b14a73764c91f977590747f407",
-				"dweb:/ipfs/QmSeNH2mfiDMKf3Q6V2sqtNxx1s72JNuA1VVxRM9HoMqYp"
-			]
-		},
-		"contracts/Uniswap/v3-periphery/contracts/interfaces/IPoolInitializer.sol": {
-			"keccak256": "0x9d7695e8d94c22cc5fcced602017aabb988de89981ea7bee29ea629d5328a862",
-			"license": "GPL-2.0-or-later",
-			"urls": [
-				"bzz-raw://61b50933026ee1017db2a6273af8cedc3238c95dca58880db0918dbdbb2f064f",
-				"dweb:/ipfs/QmUebR26pqG25d18aBELKz8aFFKkmHa8PxntzXTA7o9Ldu"
-			]
-		},
 		"contracts/openzeppelin/contracts/token/ERC721/IERC721.sol": {
 			"keccak256": "0x5dc63d1c6a12fe1b17793e1745877b2fcbe1964c3edfd0a482fac21ca8f18261",
 			"license": "MIT",
@@ -1333,19 +1293,19 @@
 			]
 		},
 		"contracts/openzeppelin/contracts/token/ERC721/IERC721Enumerable.sol": {
-			"keccak256": "0x49ae5d944b6f25701d67ef1d76cbce766f062bf1958a34b13543f539d7882850",
+			"keccak256": "0x214335376e334c64038a801e7350ccbff96d67bae9a0cd5913b65ae0d675136b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://851181789f63ce009fa30ddabd8ef159d90733216d5d1f2f9e13d16688f67489",
-				"dweb:/ipfs/QmdT4okvCWQC1eSYNFfyqjUkJBAiWbSZMwAazzEuizBJSb"
+				"bzz-raw://79061c6351c2071e2dbb6b2948771ba3f53d93546fe45b620604b32a5620c76e",
+				"dweb:/ipfs/QmXDgY4iuF9yi8fNLvzu3AquiQnf4D1aZ9kKDyGDE8N1aK"
 			]
 		},
 		"contracts/openzeppelin/contracts/token/ERC721/IERC721Metadata.sol": {
-			"keccak256": "0xfd743e54fb2a27413f703a389d1d78b003d957eaebbcfa15051d89793cf5136a",
+			"keccak256": "0x02bb611e43322b705eaf170703fc39eadc9aa898e8a4e06be726451792573a39",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://07683e02a762080a63f5ccec780488e5b87f79ded66d4c1e27f5cd62c1b5f8cb",
-				"dweb:/ipfs/QmNtAngsTxV2c2XAKrqAo7PUUpXz1J69LNzwkEun4QTX7w"
+				"bzz-raw://1c9a6787d8bd19d079c25bf1b2c60416031fe7ba908f526c7f11bc8fb7708912",
+				"dweb:/ipfs/Qmb2kTcVaRE5gMCV1rZoBUmdYqdK1UH57FLt4k3ZUVBvaj"
 			]
 		},
 		"contracts/openzeppelin/contracts/utils/introspection/IERC165.sol": {
@@ -1354,6 +1314,46 @@
 			"urls": [
 				"bzz-raw://f6fda447a62815e8064f47eff0dd1cf58d9207ad69b5d32280f8d7ed1d1e4621",
 				"dweb:/ipfs/QmfDRc7pxfaXB2Dh9np5Uf29Na3pQ7tafRS684wd3GLjVL"
+			]
+		},
+		"contracts/uniswap/v3-periphery/contracts/interfaces/IERC721Permit.sol": {
+			"keccak256": "0x9915ccd225c6840a809606b1a929404b0299bff8d7cbb6bc8439c5dfd74046d2",
+			"license": "GPL-2.0-or-later",
+			"urls": [
+				"bzz-raw://f0cdf83091593d05e85f50c1c40cf17c8c1eb6aeaac87cb9f8c91e8e31cf162c",
+				"dweb:/ipfs/QmZxxuzCfsPLnARKERZj2fvy2mEvyQWJd9uDWpFwj4UkJa"
+			]
+		},
+		"contracts/uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol": {
+			"keccak256": "0xec8be19b3492587beec5f8b7d3bc0fbd14b761e4e7c10e37c883a22d5453eb87",
+			"license": "GPL-2.0-or-later",
+			"urls": [
+				"bzz-raw://88a24c7310ac26efaf77c679753889184182f9d160b1fe359376347b5617bdd5",
+				"dweb:/ipfs/QmexmcDURHMDMHebhjT19K6q4nFhbBDm3eKhBbBP4hqGaC"
+			]
+		},
+		"contracts/uniswap/v3-periphery/contracts/interfaces/IPeripheryImmutableState.sol": {
+			"keccak256": "0x761c61ac9e453c7eef8fed6da0ad285c37cee6dfa8b1457056933e5d286d16f5",
+			"license": "GPL-2.0-or-later",
+			"urls": [
+				"bzz-raw://9019992fdf0e25b664b77a72d1ea84b09dd70439f6a47400de3ebdcaf3ea9f41",
+				"dweb:/ipfs/QmRSCM2Wf9b3Hi6ggkkxFt2piPW3g6q5VsVFSHessmuiXZ"
+			]
+		},
+		"contracts/uniswap/v3-periphery/contracts/interfaces/IPeripheryPayments.sol": {
+			"keccak256": "0xe8ad7afca9e540b647c2fe96b3545f69fd387f414bf707f6af7a153a689c396f",
+			"license": "GPL-2.0-or-later",
+			"urls": [
+				"bzz-raw://d50a147bd8e89a74c838d7d8314c94ac53485d10d721beeb6a0863a79f3b02af",
+				"dweb:/ipfs/QmcjZrUv7QAZERPC1ChfsUy9EDFbHiuoW1D2ydSHTdaSGX"
+			]
+		},
+		"contracts/uniswap/v3-periphery/contracts/interfaces/IPoolInitializer.sol": {
+			"keccak256": "0x2dabdc5d0514dd0e46b6b0e7787b69986abef98d42636867c436ad93d6aa8f2d",
+			"license": "GPL-2.0-or-later",
+			"urls": [
+				"bzz-raw://8cb47e81cf597c80a394aeadd63d9b20b7e2c49e0fd3c83b615b07715f4ebb4d",
+				"dweb:/ipfs/QmeTUN5rCRXgE7ebHyukDezhQHG5HSWTB82oqtrtjALSrg"
 			]
 		}
 	},

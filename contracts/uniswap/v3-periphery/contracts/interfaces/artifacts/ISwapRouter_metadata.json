@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.26+commit.8a97fa7a"
+		"version": "0.8.20+commit.a1b79de6"
 	},
 	"language": "Solidity",
 	"output": {
@@ -317,32 +317,32 @@
 		"compilationTarget": {
 			"contracts/uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol": "ISwapRouter"
 		},
-		"evmVersion": "cancun",
+		"evmVersion": "shanghai",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
 		"remappings": []
 	},
 	"sources": {
 		"contracts/uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol": {
-			"keccak256": "0xfa925dc6086cfc426967d6b47a651ade9bb30a747359c0d006912c59d88b5c4a",
+			"keccak256": "0xce7610a700cf6c760af022724574b71f6cb8a1b474718b1148c41c4e59f8c91c",
 			"license": "GPL-2.0-or-later",
 			"urls": [
-				"bzz-raw://ec22f5863805d4afbf740bbba06c07fe4572ba993e4936a234222c61b3d1dd6e",
-				"dweb:/ipfs/QmNyC92QbbjjG5V67GNfiXbSN6Ehi7637uFQXkWwKXR3s6"
+				"bzz-raw://986c5048d84fd4ec19a6f94c523edf15ae9c09e702d2c55b5a518cb2bd747cef",
+				"dweb:/ipfs/Qmc1VpG83GXfok8qAudpaXQDCtHRu76wosByiV4DBf7VFn"
 			]
 		},
 		"contracts/uniswap/v3-periphery/contracts/interfaces/callback/IUniswapV3SwapCallback.sol": {
-			"keccak256": "0xe75caaf5ab5dad796a807a0db3ce9d5aeeadf3cc062aaa17f701134bbd085f53",
+			"keccak256": "0x3e7a79fe15138d3f5662f52cb6e4fe290609ab8682747234da4a3c1f5c2c36e9",
 			"license": "GPL-2.0-or-later",
 			"urls": [
-				"bzz-raw://21ae8e8c7af183532964bc81889b695801f868d903af91d18d02a77d793e14fb",
-				"dweb:/ipfs/QmfDr8ugPEdbxtTCs6fut61Euf3adBvS2aNyFyC5CFAFGy"
+				"bzz-raw://e779dbd454468595a65d69e2e465a2a0644849c60e843689ed09fb629c4aff7e",
+				"dweb:/ipfs/QmQjrixc6dLbQV3jj5FGYB4Eyxfi3g7XQ7Crz1nLw64KQ9"
 			]
 		}
 	},
