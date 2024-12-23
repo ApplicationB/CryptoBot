@@ -2,13 +2,19 @@
   "name": "hardhat-project",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@nomiclabs/hardhat-waffle": "^2.0.6",
+    "ethereum-waffle": "^4.0.10",
+    "ethers": "^5.7.2",
     "hardhat": "^2.22.17"
   },
   "dependencies": {
+    "@aave/protocol-v2": "^1.0.1",
+    "@chainlink/contracts": "^0.8.0",
     "@quicknode/sdk": "^2.4.0",
+    "@uniswap/v3-periphery": "^1.4.4",
     "crypto-js": "^4.2.0",
     "dotenv": "^16.4.7",
-    "ethers": "^6.13.4",
     "fs": "^0.0.1-security",
     "solc": "^0.8.20"
   }

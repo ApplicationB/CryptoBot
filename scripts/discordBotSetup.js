@@ -11,15 +11,15 @@ const discordToken = process.env.DISCORD_TOKEN;
 const quickNodeUrl = process.env.QUICKNODE_URL;
 const mainBotAddress = process.env.MAINBOT_ADDRESS;
 const controllerAddress = process.env.CONTROLLER_ADDRESS;
-const web3 = new Web3(quickNodeUrl);
 
+const web3 = new ethers.providers.JsonRpcProvider(quickNodeUrl);
 // Replace these addresses with your deployed contract addresses
 //const mainBotAddress = '0x182BaF98B655e704034EEB963052a41FBa3e38a6'; // MainBot contract address
 //const controllerAddress = '0x4B2eB6Fd561040899B2f147c986AFB0407A0b0be'; // Controller contract address
 
 // Load contract ABIs
-const mainBotABI = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'MainBotABI.json'), 'utf8'));
-const controllerABI = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'ControllerABI.json'), 'utf8'));
+const mainBotABI = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../MainBotABI.json'), 'utf8'));
+const controllerABI = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../ControllerABI.json'), 'utf8'));
 
 const mainBot = new web3.eth.Contract(mainBotABI, mainBotAddress);
 const controller = new web3.eth.Contract(controllerABI, controllerAddress);

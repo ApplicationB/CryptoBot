@@ -1,14 +1,15 @@
-// SPDX-License-Identifier: MITs
-pragma solidity ^0.8.20;
+// SPDX-License-Identifier: GPL-2.0-or-later
+pragma solidity <=0.8.20;
 
-import './chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol';
-import './uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol';
-import './uniswap/v3-periphery/contracts/interfaces/IUniswapV3Pool.sol';
-import './uniswap/v3-periphery/contracts/interfaces/IPeripheryImmutableState.sol';
-import './uniswap/v3-periphery/contracts/interfaces/IPeripheryPayments.sol';
-import './uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol';
-import './aave/protocol-v2/contracts/interfaces/ILendingPool.sol';
-import './aave/protocol-v2/contracts/interfaces/ILendingPoolAddressesProvider.sol';
+
+import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
+import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol";
+import "@uniswap/v3-periphery/contracts/interfaces/IPeripheryImmutableState.sol";
+import "@uniswap/v3-periphery/contracts/interfaces/IPeripheryPayments.sol";
+import "@uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol";
+import "@aave/protocol-v2/contracts/interfaces/ILendingPool.sol";
+import "@aave/protocol-v2/contracts/interfaces/ILendingPoolAddressesProvider.sol";
 
 interface IERC20 {
     function transfer(address recipient, uint256 amount) external returns (bool);
