@@ -22,21 +22,21 @@ async function main() {
   const formattedPrivateKey = privateKey.startsWith('0x') ? privateKey : '0x' + privateKey;
 
   // Hash the private key using CryptoJS (SHA3-256)
-  const hashedPrivateKey = CryptoJS.SHA3(formattedPrivateKey, { outputLength: 256 }).toString(CryptoJS.enc.Hex);
+  //const hashedPrivateKey = CryptoJS.SHA3(formattedPrivateKey, { outputLength: 256 }).toString(CryptoJS.enc.Hex);
 
   // Initialize Ethers.js with QuickNode URL
   const provider = new ethers.providers.JsonRpcProvider(quickNodeUrl);
 
   // Create an Ethers wallet
-  const wallet = new ethers.Wallet(hashedPrivateKey, provider);
+  const wallet = new ethers.Wallet(formattedPrivateKey, provider);
 
   const [deployer] = await ethers.getSigners();
-  console.log('Deploying contracts with the account:', deployer.address);
+  console.log('Deploying contracts with the account:', deployer.address,'as:', wallet.address);
 
   // Verify that artifacts exist
   try {
     await ethers.getContractFactory('MainBot');
-    await ethers.getContractFactory('Controller');
+    //await ethers.getContractFactory('Controller');
   } catch (error) {
     console.error('Contract artifact not found. Ensure that contracts are compiled successfully.');
     throw error;
@@ -49,14 +49,16 @@ async function main() {
   console.log('MainBot deployed to:', mainBot.address);
 
   // Deploy Controller contract
-  const Controller = await ethers.getContractFactory('Controller');
-  const controller = await Controller.deploy(mainBot.address, 900); // Example check interval: 900 seconds (15 minutes)
-  await controller.deployed();
-  console.log('Controller deployed to:', controller.address);
+  //const Controller = await ethers.getContractFactory('Controller');
+  //const controller = await Controller.deploy(mainBot.address, 900); // Example check interval: 900 seconds (15 minutes)
+  //await controller.deployed();
+  //console.log('Controller deployed to:', controller.address);
 
   // Set the Controller as the owner of MainBot
-  await mainBot.setController(controller.address);
-  console.log('Controller set as owner of MainBot');
+  
+  await mainBot.setOwner(wallet.address)
+  //await mainBot.setController(controller.address);
+  console.log('Controller set as owner of MainBot.');
   console.log("Successful Deployment")
 }
 

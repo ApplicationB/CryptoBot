@@ -12,20 +12,20 @@ const quickNodeUrl = process.env.QUICKNODE_URL;
 const formattedPrivateKey = privateKey.startsWith('0x') ? privateKey : '0x' + privateKey;
 
 // Hash the private key using CryptoJS (SHA3-256)
-const hashedPrivateKey = CryptoJS.SHA3(formattedPrivateKey, { outputLength: 256 }).toString(CryptoJS.enc.Hex);
-
+//const hashedPrivateKey = CryptoJS.SHA3(formattedPrivateKey, { outputLength: 256 }).toString(CryptoJS.enc.Hex);
+//console.log(quickNodeUrl,privateKey,hashedPrivateKey,formattedPrivateKey)
 module.exports = {
   defaultNetwork: 'hardhat',
   networks: {
     hardhat: {
     },
-    /*localhost: {
+    localhost: {
       url: 'http://127.0.0.1:8545',
       chainId: 31337,
-    }*/
+    },
     myQuickNode: {
       url: quickNodeUrl,
-      accounts: [hashedPrivateKey],
+      accounts: [formattedPrivateKey],
     }},
   
   solidity: {

