@@ -45,6 +45,7 @@ async function initiateTrade(tradeType, amount) {
     console.log(`Trade initiated: ${tradeType} ${amount}`);
 }
 
+
 async function adjustTimeframe(timeframeIndex) {
     const tx = await controller.setTradingTimeframe(timeframeIndex);
     await tx.wait();

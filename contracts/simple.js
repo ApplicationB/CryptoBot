@@ -78,7 +78,7 @@ async function testKill() { try {
      await new Promise(resolve => setTimeout(resolve, 30)); // Call 
      //kill function from Controller contract 
 
-     const killTx = await mainBot.setController(); 
+     //const killTx = await mainBot.setController(); 
      const killTx = await mainBot.kill(); 
      await killTx.wait(); console.log('Contract killed, funds sent to:', recipientAddress); 
      // Fetch balances after killing the contract 
@@ -97,7 +97,7 @@ async function testKill() { try {
 // Execute the script
 (async () => {
     await checkBalance();
-    await fundMainBot(0.000001);
+    await fundMainBot(0.00002);
     await testKill();
 })();
 
