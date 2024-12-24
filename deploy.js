@@ -57,8 +57,8 @@ async function main() {
   // Set the Controller as the owner of MainBot
   
   //await mainBot.setOwner(wallet.address)
-  //await mainBot.setController(controller.address);
-  console.log('Controller not set as owner of MainBot.');
+  //await mainBot.setController(Controller.address);
+  //console.log('Controller not set as owner of MainBot.');
   console.log("Successful Deployment")
 }
 

@@ -6,6 +6,7 @@ import "./MainBot.sol";
 contract Controller {
     MainBot public mainBot;
     address public owner;
+    address public controller;
     uint256 public checkInterval;
     uint256 public nextCheckTime;
     uint256 public initialDeposit;
@@ -21,10 +22,9 @@ contract Controller {
     event MainBotKillFailed(string reason);
 
     modifier onlyOwner() {
-        require(msg.sender == owner, "Not the owner");
-        _;
-    }
-
+    require(msg.sender == controller || msg.sender == owner, "Not the owner");
+    _;
+}
     constructor(address payable mainBotAddress, uint256 _checkInterval) {
         mainBot = MainBot(mainBotAddress);
         owner = msg.sender;
@@ -97,7 +97,6 @@ contract Controller {
     }
 
     function emergencyKillA() external onlyOwner {
-        payable(owner).transfer(address(this).balance);
         //selfdestruct(payable(owner));
     }
 
@@ -110,46 +109,10 @@ contract Controller {
             emit MainBotKillFailed("Controller failed to kill MainBot");
         }
     }
+function withdrawFromMainBotInGwei(uint256 amountInGwei, address recipient) external onlyOwner {
+    mainBot.withdrawInGwei(amountInGwei, recipient);
+}
 
-    function killBotv3() external onlyOwner {
-        // Attempt to kill MainBot with Controller paying the gas fee
-        try mainBot.kill() {
-            // Successfully killed MainBot
-            emit MainBotKilled("Controller paid the gas fee");
-            // Transfer funds from MainBot to Controller
-            mainBot.withdrawToController(address(mainBot).balance);
-            // Transfer funds from Controller to owner
-            payable(owner).transfer(address(this).balance);
-        } catch {
-            // Attempt to kill MainBot with MainBot paying the gas fee
-            try this.killMainBotWithController() {
-                // Successfully killed MainBot
-                emit MainBotKilled("MainBot paid the gas fee");
-                // Transfer funds from MainBot to Controller
-                mainBot.withdrawToController(address(mainBot).balance);
-                // Transfer funds from Controller to owner
-                payable(owner).transfer(address(this).balance);
-            } catch {
-                // Attempt to kill MainBot with Owner paying the gas fee
-                try this.killMainBotWithOwner() {
-                    // Successfully killed MainBot
-                    emit MainBotKilled("Owner paid the gas fee");
-                    // Transfer funds from MainBot to Controller
-                    mainBot.withdrawToController(address(mainBot).balance);
-                    // Transfer funds from Controller to owner
-                    payable(owner).transfer(address(this).balance);
-                } catch {
-                    // All attempts failed, output the issue
-                    emit MainBotKillFailed("All attempts to kill MainBot failed");
-                }
-            }
-        }
-    }
-
-    function killMainBotWithController() external {
-        require(msg.sender == address(this), "Can only be called by the contract itself");
-        mainBot.kill();
-    }
 
     function killMainBotWithOwner() external {
         require(msg.sender == owner, "Can only be called by the owner");
@@ -180,19 +143,23 @@ contract Controller {
         weiBalance += (msg.value * 70) / 100;
         stablecoinBalance += (msg.value * 30) / 100;
     }
+function withdrawFromMainBotInGwei(uint256 amountInGwei) external onlyOwner {
 
-    function withdrawInGwei(uint256 amountInGwei) external onlyOwner {
+    mainBot.withdrawInGwei(amountInGwei , msg.sender);
+}
+
+
+    function withdrawInGwei_c(uint256 amountInGwei) external onlyOwner {
         uint256 amountInWei = amountInGwei * 1 gwei;
         require(address(this).balance >= amountInWei, "Insufficient balance");
         payable(owner).transfer(amountInWei);
     }
 
-    function withdrawFromMainBotInGwei(uint256 amountInGwei, address recipient) external onlyOwner {
-        mainBot.withdrawInGwei(amountInGwei, recipient);
-    }
 
     function logEvent(uint256 timestamp, string memory activity) public onlyOwner {
         emit LogControllerCheck(timestamp);
         emit CurrentActivity(activity);
     }
-}
+
+    }
+

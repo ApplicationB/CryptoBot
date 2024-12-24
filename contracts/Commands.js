@@ -34,9 +34,17 @@ const controllerABI = controllerArtifact.abi;
 
 const controller = new ethers.Contract(controllerAddress, controllerABI, wallet);
 
+async function checkBalance() {
+    const controllerBalance = await provider.getBalance(controllerAddress);
+    const mainBotBalance = await provider.getBalance(mainBotAddress);
+    const balance = await wallet.getBalance();
+    console.log('Wallet balance:', ethers.utils.formatEther(balance), 'ETH');
+    console.log(`Controller balance: ${ethers.utils.formatEther(controllerBalance)} ETH`);
+    console.log(`MainBot balance: ${ethers.utils.formatEther(mainBotBalance)} ETH`);
+}
 
 async function setMainBotController(controllerAddress) {
-    const tx = await controller.setMainBotController(controllerAddress);
+    const tx = await mainBot.setMainBotController(controllerAddress);
     await tx.wait();
     console.log('MainBot controller set to:', controllerAddress);
 }
@@ -46,7 +54,6 @@ async function setMainBotOwner(newOwner) {
     await tx.wait();
     console.log('MainBot owner set to:', newOwner);
 }
-
 async function fundMainBot(amount) {
     const tx = await wallet.sendTransaction({
         to: mainBotAddress,
@@ -58,7 +65,6 @@ async function fundMainBot(amount) {
     console.log(`Funded MainBot with ${amount} ETH\nNew wallet balance: ${ethers.utils.formatEther(newBalance)} ETH`);
     console.log(`MainBot balance: ${ethers.utils.formatEther(mainBotBalance)} ETH`);
 }
-
 async function fundController(amount) {
     const tx = await wallet.sendTransaction({
         to: controllerAddress,
@@ -69,7 +75,6 @@ async function fundController(amount) {
     const controllerBalance = await provider.getBalance(controllerAddress);
     console.log(`Funded Controller with ${amount} ETH\nNew wallet balance: ${ethers.utils.formatEther(newBalance)} ETH`);
     console.log(`Controller balance: ${ethers.utils.formatEther(controllerBalance)} ETH`);
-    
 }
 
 async function withdrawToOwner(amountInWei) {
@@ -78,7 +83,6 @@ async function withdrawToOwner(amountInWei) {
     const newBalance = await wallet.getBalance();
     console.log(`Withdrawn ${ethers.utils.formatEther(amountInWei)} ETH to owner\nNew wallet balance: ${ethers.utils.formatEther(newBalance)} ETH`);
 }
-
 async function withdrawToAddress(amountInWei, recipient) {
     const tx = await controller.withdrawToAddress(amountInWei, recipient);
     await tx.wait();
@@ -92,43 +96,36 @@ async function withdrawFromMainBotInGwei(amountInGwei, recipient) {
     const newBalance = await wallet.getBalance();
     console.log(`Withdrawn ${amountInGwei} Gwei from MainBot to ${recipient}\nNew wallet balance: ${ethers.utils.formatEther(newBalance)} ETH`);
 }
-
 async function setTradingTimeframe(timeframeIndex) {
     const tx = await controller.setTradingTimeframe(timeframeIndex);
     await tx.wait();
     console.log('Trading timeframe set');
 }
-
 async function consolidate() {
     const tx = await controller.consolidate();
     await tx.wait();
     console.log('Consolidation completed');
 }
-
 async function periodicCheck() {
     const tx = await controller.periodicCheck();
     await tx.wait();
     console.log('Periodic check completed');
 }
-
 async function initiateTradeWithHandling(tradeType, amount) {
     const tx = await controller.initiateTradeWithHandling(tradeType, amount);
     await tx.wait();
     console.log(`${tradeType} trade of ${amount} executed`);
 }
-
 async function emergencyKillA() {
     const tx = await controller.emergencyKillA();
     await tx.wait();
     console.log('Controller emergency kill executed');
 }
-
 async function emergencyKillB() {
     const tx = await mainBot.emergencyKillB();
     await tx.wait();
     console.log('MainBot emergency kill executed');
 }
-
 async function killBot() {
     const tx = await controller.killBot();
     await tx.wait();
@@ -136,27 +133,80 @@ async function killBot() {
 }
 async function enableTrading() {
     const tx = await mainBot.enableTrading();
-     await tx.wait();
-   console.log('Trading enabled for MainBot');
-       }
+    await tx.wait();
+    console.log('Trading enabled for MainBot');
+}
 async function killBotv3() {
     const tx = await controller.killBotv3();
     await tx.wait();
     console.log('MainBot killed and funds transferred via Controller');
 }
-async function checkBalance() {
-    const controllerBalance = await provider.getBalance(controllerAddress);
-    const mainBotBalance = await provider.getBalance(mainBotAddress);
-    const balance = await wallet.getBalance();
-    console.log('Wallet balance:', ethers.utils.formatEther(balance), 'ETH');
-    //console.log(`Funded Controller with ${amount} ETH\nNew wallet balance: ${ethers.utils.formatEther(newBalance)} ETH`);
-    console.log(`Controller balance: ${ethers.utils.formatEther(controllerBalance)} ETH`);
-    //console.log(`Funded MainBot with ${amount} ETH\nNew wallet balance: ${ethers.utils.formatEther(newBalance)} ETH`);
-    console.log(`MainBot balance: ${ethers.utils.formatEther(mainBotBalance)} ETH`);
+async function logOwners() {
+    const mainBotOwner = await mainBot.owner();
+    const mainBotController = await mainBot.controller();
+    const controllerOwner = await controller.owner();
+    console.log(`MainBot Owner: ${mainBotOwner}`);
+    console.log(`MainBot Control: ${mainBotController}`);
+    console.log(`Controller Owner: ${controllerOwner}`);
 }
 
-// Add more functions as needed...
+module.exports = { 
+    checkBalance,
+     setMainBotController,
+      setMainBotOwner,
+       fundMainBot, 
+       fundController, 
+       withdrawToOwner, 
+       withdrawToAddress, 
+       withdrawFromMainBotInGwei, 
+       setTradingTimeframe, 
+       consolidate, 
+       periodicCheck, 
+       initiateTradeWithHandling, 
+       emergencyKillA, emergencyKillB, killBot, enableTrading, killBotv3, logOwners };
 
+/*
+
+(async () => {
+    try {
+        // Example usage
+        await checkBalance();
+        //await fundMainBot(0.00001); // Fund MainBot with 0.1 ETH
+        //await fundController(0.00001); // Fund Controller with 0.1 ETH
+        //await enableTrading(); // Enable trading for MainBot
+        //await mainBot.setController(controller.address);
+        
+        //ISSUE!! await setMainBotController(recipientAddress);// use above implementation
+        //await controller.setMainBotOwner(wallet.address);
+
+        //CONTROLLER WITHDRAWLS
+        
+        //await withdrawToOwner(ethers.utils.parseEther('0.00001')); // Withdraw 0.05 ETH to owner
+        //await withdrawToAddress(ethers.utils.parseEther('0.00001'), wallet.address); // Withdraw 0.05 ETH to recipient
+        
+        
+        // Error during test: TypeError: controller.withdrawFromMainBotInGwei is not a function await withdrawFromMainBotInGwei(1000000000, wallet.address); // Withdraw 1000000000 Gwei from MainBot to recipient
+        
+        //await setTradingTimeframe(0); // Set trading timeframe to 15 minutes
+        
+        //await consolidate(); // Consolidate funds in MainBot   0xF82C44bFdfA326BF8dd86A0F8DBB9895765923c8
+        //await periodicCheck(); // Perform periodic check
+        //await initiateTradeWithHandling('buy', 100); // Initiate buy trade of 100
+        ///await emergencyKillA(); // Execute emergency kill for Controller
+        //await emergencyKillB(); // Execute emergency kill for MainBot
+        //await killBot(); // Kill MainBot via Controller
+        //await killBotv3(); // Kill MainBot and transfer funds via Controller
+       // await checkBalance(); // Check balances after operations
+       await checkBalance();
+       await logOwners();
+    } catch (error) {
+        console.error('Error during test:', error);
+    }
+})(); */
+
+
+// Add more functions as needed...
+/*
 (async () => {
     // Example usage
 
@@ -183,7 +233,7 @@ async function checkBalance() {
     */
     //Xawait mainBot.withdrawInGwei(100000, wallet.address);
     //await setTradingTimeframe(0); //Gas estimation issue// Set trading timeframe to 15 minutes
-        //await killBotv3(); //ISSUE// Kill MainBot and transfer funds via Controller
+    //   =//await killBotv3(); //ISSUE// Kill MainBot and transfer funds via Controller
     //await consolidate(); // Consolidate funds in MainBot
     //await periodicCheck(); // Perform periodic check
     //await initiateTradeWithHandling('buy', 1); // Initiate buy trade of 100
@@ -193,4 +243,4 @@ async function checkBalance() {
     UNPREDICTABLE_GAS_LIMIT
     Error: cannot estimate gas; transaction may fail or may require manual gas limit 
     Error: Only controller can trigger this function","code":"UNPREDICTABLE_GAS_LIMIT"*/
-})();
+
