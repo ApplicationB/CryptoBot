@@ -9,7 +9,7 @@ contract Controller {
     uint256 public checkInterval;
     uint256 public nextCheckTime;
     uint256 public initialDeposit;
-    uint256 public maticBalance;
+    uint256 public weiBalance;
     uint256 public stablecoinBalance;
 
     event LogControllerCheck(uint256 time);
@@ -17,6 +17,8 @@ contract Controller {
     event ConsolidationStarted();
     event ConsolidationCompleted();
     event CurrentActivity(string activity);
+    event MainBotKilled(string info);
+    event MainBotKillFailed(string reason);
 
     modifier onlyOwner() {
         require(msg.sender == owner, "Not the owner");
@@ -48,11 +50,13 @@ contract Controller {
         nextCheckTime = block.timestamp + checkInterval;
     }
 
-    function Consolidate() external onlyOwner {
+    function consolidate() external onlyOwner {
         emit ConsolidationStarted();
         mainBot.convertAllToPOL();
         emit ConsolidationCompleted();
     }
+
+  
 
     function handleTradeError(uint256 retryCount) internal {
         if (retryCount >= 3) {
@@ -92,18 +96,88 @@ contract Controller {
         emit LogControllerTrade("Adjusting timeframe", selectedTimeframe);
     }
 
-function killBot() external onlyOwner {
-    mainBot.kill();
-    payable(msg.sender).transfer(address(mainBot).balance);
-   
-}
-function kill() public {
-    payable(msg.sender).transfer(address().balance);//adjust for transfering to wallet not from
-}
+    function emergencyKillA() external onlyOwner {
+        payable(owner).transfer(address(this).balance);
+        //selfdestruct(payable(owner));
+    }
 
-receive() external payable {
+    function killBot() external onlyOwner {
+        try mainBot.kill() {
+            // Successfully killed MainBot
+            emit MainBotKilled("Controller paid the gas fee");
+        } catch {
+            // Handle failure if needed
+            emit MainBotKillFailed("Controller failed to kill MainBot");
+        }
+    }
+
+    function killBotv3() external onlyOwner {
+        // Attempt to kill MainBot with Controller paying the gas fee
+        try mainBot.kill() {
+            // Successfully killed MainBot
+            emit MainBotKilled("Controller paid the gas fee");
+            // Transfer funds from MainBot to Controller
+            mainBot.withdrawToController(address(mainBot).balance);
+            // Transfer funds from Controller to owner
+            payable(owner).transfer(address(this).balance);
+        } catch {
+            // Attempt to kill MainBot with MainBot paying the gas fee
+            try this.killMainBotWithController() {
+                // Successfully killed MainBot
+                emit MainBotKilled("MainBot paid the gas fee");
+                // Transfer funds from MainBot to Controller
+                mainBot.withdrawToController(address(mainBot).balance);
+                // Transfer funds from Controller to owner
+                payable(owner).transfer(address(this).balance);
+            } catch {
+                // Attempt to kill MainBot with Owner paying the gas fee
+                try this.killMainBotWithOwner() {
+                    // Successfully killed MainBot
+                    emit MainBotKilled("Owner paid the gas fee");
+                    // Transfer funds from MainBot to Controller
+                    mainBot.withdrawToController(address(mainBot).balance);
+                    // Transfer funds from Controller to owner
+                    payable(owner).transfer(address(this).balance);
+                } catch {
+                    // All attempts failed, output the issue
+                    emit MainBotKillFailed("All attempts to kill MainBot failed");
+                }
+            }
+        }
+    }
+
+    function killMainBotWithController() external {
+        require(msg.sender == address(this), "Can only be called by the contract itself");
+        mainBot.kill();
+    }
+
+    function killMainBotWithOwner() external {
+        require(msg.sender == owner, "Can only be called by the owner");
+        mainBot.kill();
+    }
+
+    function setMainBotController(address _controller) external onlyOwner {
+        mainBot.setController(_controller);
+    }
+
+    function setMainBotOwner(address newOwner) external onlyOwner {
+        mainBot.setOwner(newOwner);
+    }
+
+    function withdrawToOwner(uint256 amountInWei) external onlyOwner {
+        require(address(this).balance >= amountInWei, "Insufficient balance");
+        payable(owner).transfer(amountInWei);
+    }
+
+    function withdrawToAddress(uint256 amountInWei, address recipient) external onlyOwner {
+        require(address(this).balance >= amountInWei, "Insufficient balance");
+        require(recipient != address(0), "Invalid address");
+        payable(recipient).transfer(amountInWei);
+    }
+
+    receive() external payable {
         initialDeposit += msg.value;
-        maticBalance += (msg.value * 70) / 100;
+        weiBalance += (msg.value * 70) / 100;
         stablecoinBalance += (msg.value * 30) / 100;
     }
 
@@ -111,6 +185,10 @@ receive() external payable {
         uint256 amountInWei = amountInGwei * 1 gwei;
         require(address(this).balance >= amountInWei, "Insufficient balance");
         payable(owner).transfer(amountInWei);
+    }
+
+    function withdrawFromMainBotInGwei(uint256 amountInGwei, address recipient) external onlyOwner {
+        mainBot.withdrawInGwei(amountInGwei, recipient);
     }
 
     function logEvent(uint256 timestamp, string memory activity) public onlyOwner {

